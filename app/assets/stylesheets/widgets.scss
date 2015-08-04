@@ -1,6 +1,31 @@
-// Place all the styles related to the widgets controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  background-color: #E7EDEE;
+}
+
+.gridster {
+  .gridster-ul {
+    list-style: none;
+    padding: 0;
+  }
+  .panel, .panel-body {
+    min-height: 140px;
+    padding: 0;
+  }
+  .panel {
+    border-radius: 5px;
+  }
+  .panel-heading {
+    background-color: #FFF;
+    cursor: move;
+    .caret {
+      border-width: 8px;
+    }
+  }
+}
+
+.dropdown-li{
+  position: static !important;
+}
 
 
 #map-canvas {
