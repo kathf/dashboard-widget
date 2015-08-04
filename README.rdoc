@@ -1,1 +1,13 @@
 https://gist.github.com/cesar-tonnoir/f30b30916b8c507f0c6a
+
+User stories:
+
+Anonymous user can:
+- sign in to access dashboard
+
+Signed-in user can:
+- load selected widget
+- select organisation that widgets will display data for
+- view "employee location" widget to view map of the most important work locations for the  company (based on employee numbers).
+- view "sales flow" widget to view map of all the most important sales channels for the company (country/city with the biggest amount invoiced).
+- sign-out 
