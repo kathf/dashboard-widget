@@ -5,3 +5,16 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+
+
+employee_location = Widget.create!(
+  name: "Employees location",
+  engine: "hr/employee_details"
+)
+
+sales_flow = Widget.create!(
+  name: "Sales flow",
+  engine: "invoices/list",
+  metadata_entity: [ "customers", "suppliers" ]
+)
