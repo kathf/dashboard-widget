@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   root 'widgets#dashboard'
-  resources :widgets, only: :dashboard
+  resources :widgets, only: [:dashboard]
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

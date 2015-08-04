@@ -1,17 +1,15 @@
 class WidgetsController < ApplicationController
-    http_basic_authenticate_with name: Rails.application.secrets.API_user, password: Rails.application.secrets.API_pass
-    # before_action :set_widget, only: [:show]
+  before_action :authenticate
 
   def dashboard
+    @widgets = Widget.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @widgets }
+    end
   end
 
-  def show
-  end
-
-  private
-
-  def set_widget
-    @widget = Widget.find(params[:id])
+  def authenticate
   end
 
 end

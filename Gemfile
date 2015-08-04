@@ -12,7 +12,6 @@ group :production, :staging do
   gem "rails_serve_static_assets"
 end
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use postgresql as the database for Active Record
