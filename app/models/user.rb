@@ -1,3 +1,8 @@
 class User < ActiveRecord::Base
-  has_many :organizations
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable
+        # , :registerable, :recoverable, :rememberable, :trackable, :validatable
+
+  belongs_to :organizations
 end

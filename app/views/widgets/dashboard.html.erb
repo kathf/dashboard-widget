@@ -1,7 +1,20 @@
 <div class="container-fluid">
-  <div class="gridster" ng-controller="DashboardCtrl">
-    <div ng-repeat="myWidget in allWidgets">
-      <div ng-show="myWidget.display">
+  <div class="gridster" ng-controller="DashboardController">
+    <div ng-repeat="widget in allWidgets">
+
+      <div ng-show="!widget.display">
+        <div class="panel panel-default" data-row="1" data-col="1">
+          <div class="panel-heading drag-handle">
+            <h4 class="text-center"> {{ widget.name }} </h4>
+          </div>
+          <div class="panel-body">
+            <a class="text-center center-block" href ng-click="widget.display = true"><span class="glyphicon glyphicon-plus"></span>
+            <div>add widget</div></a>
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="widget.display">
         <div class="panel panel-default" data-row="1" data-col="1">
           <div class="panel-heading drag-handle">
             <div class="dropdown  pull-right">
@@ -9,28 +22,19 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li class="dropdown-li"><a href="#">Close widget</a></li>
+                <li class="dropdown-li"><a href ng-click="widget.display = false"</a>Close</li>
                 <li class="dropdown-li"><a href="#">Settings</a></li>
               </ul>
             </div>
-            <h4 class="text-center"> {{ myWidget.name }} </h4>
-          </div>
-          <div class="panel-body" ng-controller="WidgetCtrl">
-            widget content here
-          </div>
-        </div>
-      </div>
-      <div ng-show="!myWidget.display">
-        <div class="panel panel-default" data-row="1" data-col="1">
-          <div class="panel-heading drag-handle">
-            <h4 class="text-center"> {{ myWidget.name }} </h4>
+            <h4 class="text-center"> {{ widget.name }} </h4>
           </div>
           <div class="panel-body">
-            <a class="text-center center-block" href ng-click="myWidget.display = true"><span class="glyphicon glyphicon-plus"></span>
-            <div>add widget</div></a>
+            widget content here
+            <div ng-include="getInclude(widget)"></div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>

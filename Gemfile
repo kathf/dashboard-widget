@@ -12,6 +12,7 @@ group :production, :staging do
   gem "rails_serve_static_assets"
 end
 
+gem 'devise'
 gem 'httparty', '~> 0.13.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
