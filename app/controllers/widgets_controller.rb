@@ -1,7 +1,10 @@
 class WidgetsController < ApplicationController
-  # before_action :authenticate
+  before_action :authenticate_user
+  API_URL = Rails.application.secrets.API_url
 
   def dashboard
+    byebug
+    @user_id = session[:user]
   end
 
   def index
@@ -14,15 +17,16 @@ class WidgetsController < ApplicationController
 
   def show
     @widget = Widget.find(params[:id])
+    response = HTTParty.get('API_URL')
+    @data = response.body
+    byebug
+    render json: @data
   end
 
-  # def authenticate
-  #   # Assuming we defined API_KEY_REGEX elsewhere
-  #   return render(:text => 'Invalid API key.') unless params[:api_key] =~ API_KEY_REGEX
-  #
-  #   # You may want to validate the key against your database and/or log the request
-  #   return render(:text => 'Invalid API key.') if not @key = Key.find_by_hash(params[:api_key])
-  #
-  # end
-
+  def authenticate_user
+    authenticate_or_request_with_http_basic do |u, p|
+      user_for_auth = User.find_by(user: u)
+      user_for_auth && user_for_auth.password == p
+    end
+  end
 end

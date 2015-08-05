@@ -4,6 +4,15 @@
       <div ng-show="myWidget.display">
         <div class="panel panel-default" data-row="1" data-col="1">
           <div class="panel-heading drag-handle">
+            <div class="dropdown  pull-right">
+              <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li class="dropdown-li"><a href="#">Close widget</a></li>
+                <li class="dropdown-li"><a href="#">Settings</a></li>
+              </ul>
+            </div>
             <h4 class="text-center"> {{ myWidget.name }} </h4>
           </div>
           <div class="panel-body" ng-controller="WidgetCtrl">

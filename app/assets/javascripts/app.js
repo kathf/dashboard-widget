@@ -1,5 +1,9 @@
 (function(){
-  var app = angular.module('myApp',['templates','ngRoute']);
+  var app = angular.module('myApp', [
+    'templates',
+    'ngRoute',
+    'ngResource',
+  ])
 
   // app.config([ '$routeProvider', function($routeProvider) {
   //   $routeProvider
@@ -18,11 +22,7 @@
     $(".gridster").gridster({
         widget_selector: "div.panel",
         widget_margins: [10, 10],
-        widget_base_dimensions: [350, 300],
-        autogenerate_stylesheet: true,
-        draggable: {
-          handle: "h4"
-        }
+        widget_base_dimensions: [350, 300]
     });
 
     $http.get('widgets.json').
@@ -34,9 +34,116 @@
       });
   }]);
 
-  app.controller('WidgetCtrl', function(){
+  // app.config(['$httpProvider', function($httpProvider) {
+  //   $httpProvider.defaults.headers.common.Authorization = 'Basic xx:xx';
+  // }]);
+
+  // var req = {
+  //  method: 'POST',
+  //  url: 'http://example.com',
+  //  headers: {
+  //    'Content-Type': undefined
+  //  },
+  //  data: { test: 'test' }
+  // }
+
+
+
+  var apiUrl = "https://api-impac-uat.maestrano.io/api/v1/get_widget?metadata[organization_ids][]=org-fbte&engine=hr/employees_list";
+
+  // app.factory("Api", ['$resource', '$http', function($resource, $http) {
+  //   var result = $resource( apiUrl,
+  //     { callback: "JSON_CALLBACK" },
+  //     { get: { method: "JSONP" }}
+  //   );
+  // }]);
+
+  // function MyCtrl($scope, $resource) {
+  //   $scope.twitterAPI = $resource("http://search.twitter.com/search.json",
+  //     { callback: "JSON_CALLBACK" },
+  //     { get: { method: "JSONP" }});
+  //
+  //   $scope.search = function() {
+  //     $scope.searchResult = $scope.twitterAPI.get({ q: $scope.searchTerm });
+  //   };
+  //
+
+  app.controller('WidgetCtrl', [ '$scope', 'Api', function( $scope, Api ) {
     console.log("inside widget controller");
-  });
+    // Api.get(function(data) {
+    //   $scope.employees = data;
+    // });
+
+    // Api.query(function(data) {
+    //   $scope.employees = data;
+    // });
+  }]);
+
+
+
+  //
+  // app.factory('Api', ['$resource', 'TokenHandler', function($resource, tokenHandler) {
+  //   var resource = $resource()
+  //
+  //   resource = tokenHandler.wrapActions( resource, ["query", "update"] );
+  //
+  //   return resource;
+  // }])
+  //
+  // app.factory('TokenHandler', function() {
+  //   var tokenHandler = {};
+  //   var token = "none";
+  //
+  //   tokenHandler.set = function( newToken ) {
+  //     token = newToken;
+  //   };
+  //
+  //   tokenHandler.get = function() {
+  //     return token;
+  //   };
+  //
+  //   // wrap given actions of a resource to send auth token with every
+  //   // request
+  //   tokenHandler.wrapActions = function( resource, actions ) {
+  //     // copy original resource
+  //     var wrappedResource = resource;
+  //     for (var i=0; i < actions.length; i++) {
+  //       tokenWrapper( wrappedResource, actions[i] );
+  //     };
+  //     // return modified copy of resource
+  //     return wrappedResource;
+  //   };
+  //
+  //   // wraps resource action to send request with auth token
+  //   var tokenWrapper = function( resource, action ) {
+  //     // copy original action
+  //     resource['_' + action]  = resource[action];
+  //     // create new action wrapping the original and sending token
+  //     resource[action] = function( data, success, error){
+  //       return resource['_' + action](
+  //         angular.extend({}, data || {}, {access_token: tokenHandler.get()}),
+  //         success,
+  //         error
+  //       );
+  //     };
+  //   };
+  //
+  //   return tokenHandler;
+  // });
+  //
+
+
+
+
+
+    // $http.get('widgets.json').
+    //   success(function(data, status, headers, config) {
+    //     $scope.allWidgets = data;
+    //   }).
+    //   error(function(data, status, headers, config) {
+    //     console.log(status);
+    //   });
+
 
 
   // app.controller('MapController', [ '$http', '$scope', function($http, $scope) {
@@ -186,5 +293,6 @@
   //   });
   //
   // }]);
+
 
 })();
