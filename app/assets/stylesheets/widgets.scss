@@ -9,15 +9,14 @@ body {
   }
   .panel {
     padding: 0;
-  }
-  .panel {
+    // margin: 0;
     border-radius: 5px;
   }
   .panel-heading {
     background-color: #FFF;
     cursor: move;
-    .caret {
-      border-width: 8px;
+    h4 {
+      margin: 0;
     }
   }
 }
@@ -26,6 +25,9 @@ body {
   position: static !important;
 }
 
+.glyphicon-plus {
+  font-size: 80px;
+}
 
 #map-canvas {
   height: 350px;

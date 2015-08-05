@@ -1,6 +1,27 @@
 <div class="container-fluid">
   <div class="gridster" ng-controller="DashboardCtrl">
-    <ul class="gridster-ul" ng-view>
-    </ul>
+    <div ng-repeat="myWidget in allWidgets">
+      <div ng-show="myWidget.display">
+        <div class="panel panel-default" data-row="1" data-col="1">
+          <div class="panel-heading drag-handle">
+            <h4 class="text-center"> {{ myWidget.name }} </h4>
+          </div>
+          <div class="panel-body" ng-controller="WidgetCtrl">
+            widget content here
+          </div>
+        </div>
+      </div>
+      <div ng-show="!myWidget.display">
+        <div class="panel panel-default" data-row="1" data-col="1">
+          <div class="panel-heading drag-handle">
+            <h4 class="text-center"> {{ myWidget.name }} </h4>
+          </div>
+          <div class="panel-body">
+            <a class="text-center center-block" href ng-click="myWidget.display = true"><span class="glyphicon glyphicon-plus"></span>
+            <div>add widget</div></a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

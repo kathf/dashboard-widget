@@ -1,24 +1,43 @@
 (function(){
   var app = angular.module('myApp',['templates','ngRoute']);
 
-  app.config([ '$routeProvider', function($routeProvider) {
-    $routeProvider
-      .when("/",
-        {
-          templateUrl: "show.html",
-          controller: "DashboardCtrl"
+  // app.config([ '$routeProvider', function($routeProvider) {
+  //   $routeProvider
+  //     .when("",
+  //       {
+  //         templateUrl: "index.html",
+  //         controller: "DashboardCtrl"
+  //       }
+  //     );
+  //     .when("/")
+  // }]);
+
+  app.controller('DashboardCtrl', [ '$scope', '$http', function($scope, $http) {
+    console.log("inside dashboard controller");
+
+    $(".gridster").gridster({
+        widget_selector: "div.panel",
+        widget_margins: [10, 10],
+        widget_base_dimensions: [350, 300],
+        autogenerate_stylesheet: true,
+        draggable: {
+          handle: "h4"
         }
-      );
+    });
+
+    $http.get('widgets.json').
+      success(function(data, status, headers, config) {
+        $scope.allWidgets = data;
+      }).
+      error(function(data, status, headers, config) {
+        console.log(status);
+      });
   }]);
 
-  app.controller('DashboardCtrl', function(){
-    console.log("inside dashboard controller");
-    $(".gridster ul").gridster({
-        widget_margins: [10, 10],
-        widget_base_dimensions: [140, 140],
-        widget_selector: "div.panel",
-    });
+  app.controller('WidgetCtrl', function(){
+    console.log("inside widget controller");
   });
+
 
   // app.controller('MapController', [ '$http', '$scope', function($http, $scope) {
   //
