@@ -7,16 +7,13 @@
   </div>
   <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav pull-right">
-
       <li class="dropdown">
         <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-          <strong>Organisations</strong> <span class="caret"></span></a>
-        <ul id="g-account-menu" class="dropdown-menu" role="menu">
-          <li><a href="#">My Profile</a></li>
+          <strong> <%= current_user.organizations[0].name %> </strong> <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+          <%= render partial: 'layouts/organization', collection: current_user.organizations %>
         </ul>
       </li>
-
-      <li><a href="#">Log out</a></li>
     </ul>
   </div>
 </div>
