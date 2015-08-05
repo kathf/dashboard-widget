@@ -10,4 +10,3 @@ Signed-in user can:
 - select organisation that widgets will display data for
 - view "employee location" widget to view map of the most important work locations for the  company (based on employee numbers).
 - view "sales flow" widget to view map of all the most important sales channels for the company (country/city with the biggest amount invoiced).
-- sign-out 
