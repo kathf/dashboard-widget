@@ -6,14 +6,28 @@
     <a class="navbar-brand" href="#">Dashboard</a>
   </div>
   <div class="navbar-collapse collapse">
-    <ul class="nav navbar-nav pull-right">
-      <li class="dropdown">
-        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-          <strong> <%= current_user.organizations[0].name %> </strong> <span class="caret"></span></a>
-        <ul class="dropdown-menu" role="menu">
-          <%= render partial: 'layouts/organization', collection: current_user.organizations %>
-        </ul>
-      </li>
-    </ul>
+    <% if user_signed_in? %>
+      <ul class="nav navbar-nav pull-right">
+
+        <!-- <%= form_for current_user, url: '/' do |f| %>
+          <%= f.fields_for :organizations do |o| %>
+            <%= o.collection_select :name, current_user.organizations, :id, :name, prompt: true %>
+          <% end %>
+          <%= f.submit %>
+        <% end %> -->
+
+        <li class="dropdown">
+          <a class="org dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+            <strong> <%= current_user.organizations[0].name %> </strong> <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <%= render partial: 'layouts/organization', collection: current_user.organizations %>
+          </ul>
+        </li>
+
+
+        <li> <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>   </li>
+
+      </ul>
+    <% end %>
   </div>
 </div>

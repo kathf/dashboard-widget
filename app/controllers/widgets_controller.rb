@@ -1,7 +1,4 @@
 class WidgetsController < ApplicationController
-  # API_URL = "http://api-impac-uat.maestrano.io/api/v1/get_widget?metadata[organization_ids][]=org-fbte&engine=hr/employees_list"
-  PASS = Rails.application.secrets.API_pass
-  USER = Rails.application.secrets.API_user
 
   def dashboard
     # byebug
@@ -15,8 +12,7 @@ class WidgetsController < ApplicationController
 
   def show
     @widget = Widget.find(params[:id])
-    url = url_generator
-    response = HTTParty.get(url, {basic_auth: {username: USER, password: PASS} } )
+    response = HTTParty.get( url_generator, {basic_auth: auth} )
     @data = response
     render json: @data
     # respond_to do |format|
@@ -26,6 +22,10 @@ class WidgetsController < ApplicationController
   end
 
   private
+
+  def auth
+    {username: current_user.api_key, password: current_user.api_token}
+  end
 
   def url_generator
     Rails.application.secrets.API_url + "metadata[organization_ids][]=" + current_user.organizations[0].api_id + "&engine=" + @widget.engine
