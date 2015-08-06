@@ -12,7 +12,7 @@ class ApiService
 
   def url_generator
     [
-      Rails.application.secrets.API_url,
+      "http://api-impac-uat.maestrano.io/api/v1/get_widget?",
       "metadata[organization_ids][]=",
       @user.organizations[0].api_id,
       "&engine=",

@@ -45,25 +45,6 @@
         console.log(status);
       });
   }]);
-  //
-  // app.directive('showWidget', [ '$scope', '$http', function($scope, $http) {
-  //   return {
-  //     restrict: 'E',
-  //     templateUrl: 'widgets/' + this.widget.id,
-  //     controller: function() {
-  //       console.log("inside show-widget directive");
-  //
-  //       $http.get('widgets/' + this.widget.id + '.json').
-  //         success(function(data, status, headers, config) {
-  //           $scope.employees = data;
-  //         }).
-  //         error(function(data, status, headers, config) {
-  //           console.log(status);
-  //         });
-  //
-  //     },
-  //     controllerAs: 'widgets'
-  //   };
-  // }]);
+
 
 })();

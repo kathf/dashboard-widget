@@ -1,8 +1,6 @@
 class WidgetsController < ApplicationController
 
   def dashboard
-    # byebug
-    # @user_id = session[:user]
   end
 
   def index
