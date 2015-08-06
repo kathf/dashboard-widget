@@ -1,5 +1,6 @@
 <div class="container-fluid">
-  <div class="gridster" ng-controller="DashboardController">
+  <div class="gridster" ng-controller="DashboardController as dash">
+    
     <div ng-repeat="widget in allWidgets">
 
       <div ng-show="!widget.display">
