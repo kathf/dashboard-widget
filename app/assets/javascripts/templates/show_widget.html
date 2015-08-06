@@ -1,0 +1,18 @@
+<div class="panel panel-default" data-row="1" data-col="1" data-sizex="1" data-sizey="2">
+  <div class="panel-heading drag-handle">
+    <div class="dropdown  pull-right">
+      <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <li class="dropdown-li"><a href ng-click="widget.display = false"</a>Close</li>
+        <li class="dropdown-li"><a href="#">Settings</a></li>
+      </ul>
+    </div>
+    <h4 class="text-center"> {{ widget.name }} </h4>
+  </div>
+  <div class="panel-body">
+    <!-- <show-widget></show-widget> -->
+    <div ng-include="getInclude(widget)"></div>
+  </div>
+</div>

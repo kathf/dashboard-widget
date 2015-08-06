@@ -12,7 +12,7 @@
     $(".gridster").gridster({
         widget_selector: "div.panel",
         widget_margins: [10, 10],
-        widget_base_dimensions: [350, 300]
+        widget_base_dimensions: [500, 200]
     });
 
     $http.get('widgets.json').
@@ -30,6 +30,7 @@
     return "";
     }
   }]);
+
 
   app.controller('WidgetController', [ '$scope', '$http', 'MapService', function($scope, $http, MapService) {
     console.log("inside widget controller");

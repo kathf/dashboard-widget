@@ -1,10 +1,10 @@
 <div class="container-fluid">
-  <div class="gridster" ng-controller="DashboardController as dash">
-    
-    <div ng-repeat="widget in allWidgets">
+  <div class="gridster" ng-controller="DashboardController">
+
+    <div ng-repeat="widget in allWidgets" ng-init="widget.display = false">
 
       <div ng-show="!widget.display">
-        <div class="panel panel-default" data-row="1" data-col="1">
+        <div class="panel panel-default" data-row="1" data-col="1" data-sizex="1" data-sizey="1">
           <div class="panel-heading drag-handle">
             <h4 class="text-center"> {{ widget.name }} </h4>
           </div>
@@ -16,7 +16,7 @@
       </div>
 
       <div ng-show="widget.display">
-        <div class="panel panel-default" data-row="1" data-col="1">
+        <div class="panel panel-default" data-row="1" data-col="1" data-sizex="1" data-sizey="2">
           <div class="panel-heading drag-handle">
             <div class="dropdown  pull-right">
               <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
@@ -27,10 +27,9 @@
                 <li class="dropdown-li"><a href="#">Settings</a></li>
               </ul>
             </div>
-            <h4 class="text-center"> {{ widget.name }} </h4>
+            <h4> {{ widget.name }} </h4>
           </div>
           <div class="panel-body">
-            <!-- <show-widget></show-widget> -->
             <div ng-include="getInclude(widget)"></div>
           </div>
         </div>
