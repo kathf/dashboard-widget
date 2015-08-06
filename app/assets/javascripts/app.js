@@ -31,7 +31,6 @@
     }
   }]);
 
-
   app.controller('WidgetController', [ '$scope', '$http', 'initializeMap', function($scope, $http, initializeMap) {
     console.log("inside widget controller");
 
@@ -41,9 +40,9 @@
 
     $http.get(url).
       success(function(data, status, headers, config) {
-        $scope.employees = data;
+        $scope.data = data;
 
-        $.each( $scope.employees, function() {
+        $.each( $scope.data, function() {
           $scope.map.geocode(this, $scope.map.map);
         });
 

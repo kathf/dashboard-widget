@@ -32,8 +32,8 @@ mapModule.service('initializeMap', function(){
 
   var geocoder = new google.maps.Geocoder();
 
-  this.geocode = function( employee, map ) {
-    var addressString = employee.address;
+  this.geocode = function( data, map ) {
+    var addressString = data.address;
 
     geocoder.geocode( {address: addressString} , function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
