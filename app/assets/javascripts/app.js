@@ -30,20 +30,39 @@
     }
   }]);
 
-  app.controller('WidgetController', [ '$scope', function( $scope ) {
+  app.controller('WidgetController', [ '$scope', '$http', function($scope, $http) {
     console.log("inside widget controller");
 
-  }]);
+    var url = 'widgets/' + $scope.widget.id + '.json';
 
-  // app.directive('showWidget', ['$scope', function( $scope ) {
-  //   console.log($scope.widget);
+    $http.get(url).
+      success(function(data, status, headers, config) {
+        $scope.employees = data;
+        console.log(data);
+        console.log($scope.employees);
+      }).
+      error(function(data, status, headers, config) {
+        console.log(status);
+      });
+  }]);
+  //
+  // app.directive('showWidget', [ '$scope', '$http', function($scope, $http) {
   //   return {
   //     restrict: 'E',
   //     templateUrl: 'widgets/' + this.widget.id,
-  //     // controller: function() {
-  //     //   console.log("something else");
-  //     // },
-  //     // controllerAs: 'WidgetController',
+  //     controller: function() {
+  //       console.log("inside show-widget directive");
+  //
+  //       $http.get('widgets/' + this.widget.id + '.json').
+  //         success(function(data, status, headers, config) {
+  //           $scope.employees = data;
+  //         }).
+  //         error(function(data, status, headers, config) {
+  //           console.log(status);
+  //         });
+  //
+  //     },
+  //     controllerAs: 'widgets'
   //   };
   // }]);
 
