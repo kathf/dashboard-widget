@@ -28,9 +28,9 @@ mapModule.service('initializeMap', function(){
     styles: myStyles
   };
 
-  this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
   var geocoder = new google.maps.Geocoder();
+  
+  this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
   this.geocode = function( data, map ) {
     var addressString = data.address;

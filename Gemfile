@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-
 gem 'angularjs-rails', '~> 1.4.3'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'
 end
 
+gem 'font-awesome-rails', '~> 4.3.0.0'
 gem 'sass', '3.2.19'
 gem 'angular-rails-templates'
 gem "foreman"

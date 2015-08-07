@@ -12,7 +12,6 @@ class WidgetsController < ApplicationController
     @widget = Widget.find(params[:id])
     data = ApiService.new(@widget, current_user).query
     render json: data
-    end
   end
 
 end

@@ -1,12 +1,12 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="dashboardController">
 
-  <div ng-controller="DashboardController">
-    <div class="panel panel-default">
-      <a href class="text-center center-block" ng-click="something something">
-        <span class="glyphicon glyphicon-plus"></span>
-        <div>add widget</div>
-      </a>
+  <div class="dashboard-container">
+    <div class="row">
+      <show-widget ng-show="widgetsDisplayed.length != 0"></show-widget>
+      <add-widget-button class="col-xs-6 col-sm-2"></add-widget-button>
     </div>
   </div>
+
+  <widget-marketplace ng-show="widgetMarketplace == 'show'" class="alert alert-warning"> </widget-marketplace>
 
 </div>
