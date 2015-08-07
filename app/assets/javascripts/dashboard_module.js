@@ -1,6 +1,7 @@
 var dashboardModule = angular.module('dashboardModule', ['templates']);
 
-dashboardModule.controller('dashboardController', [ '$scope', '$http', function($scope, $http) {
+
+var dashboardController = function($scope, $http) {
 
   $scope.widgetMarketplace = 'hide';
   $scope.widgetsDisplayed = [];
@@ -17,7 +18,10 @@ dashboardModule.controller('dashboardController', [ '$scope', '$http', function(
     .error(function(data, status, headers, config) {
       console.log(status);
     });
-}]);
+};
+
+dashboardController.$inject = ['$scope', '$http'];
+dashboardModule.controller('dashboardController', dashboardController);
 
 dashboardModule.directive('addWidgetButton', function() {
   return {

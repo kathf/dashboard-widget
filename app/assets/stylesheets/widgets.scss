@@ -17,7 +17,6 @@ widget-marketplace {
 show-widget {
   height: 400px;
   width: 400px;
-  background-color: red;
 }
 
 .widget-image {
@@ -29,6 +28,10 @@ show-widget {
   margin: auto auto;
 }
 
+.widget-dimensions {
+  height: 400px;
+  width: 500px;
+}
 
 .widget-display-container {
   border: 1px solid #8A6D3B;
@@ -43,8 +46,6 @@ show-widget {
 
 .widget-display-panel {
   border-radius: 5px;
-  height: 400px;
-  min-width: 500px;
   padding: 0;
   margin: 10px 20px;
 }
@@ -63,7 +64,7 @@ show-widget {
   font-size: 80px;
 }
 
-#map-canvas {
+.map-canvas {
   height: 370px;
   width: 498px;
 }

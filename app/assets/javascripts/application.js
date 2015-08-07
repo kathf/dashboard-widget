@@ -18,5 +18,4 @@
     'widgetModule',
     'mapModule',
   ])
-
 })();

@@ -1,6 +1,6 @@
 var mapModule = angular.module('mapModule', []);
 
-mapModule.service('initializeMap', function(){
+mapModule.service('initializeMap', function($timeout){
 
   var myStyles = [
     {"featureType":"road","stylers":[{"visibility":"off"}]},
@@ -28,21 +28,28 @@ mapModule.service('initializeMap', function(){
     styles: myStyles
   };
 
-  var geocoder = new google.maps.Geocoder();
-  
-  this.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  $timeout(function(){
 
-  this.geocode = function( data, map ) {
-    var addressString = data.address;
+    console.log("mooo");
 
-    geocoder.geocode( {address: addressString} , function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
-        });
-      }
-    });
-  };
+    this.map = new google.maps.Map(document.getElementById('employee-locations-map'), mapOptions);
+
+    console.log("moo");
+
+    this.geocode = function( data, map ) {
+      var addressString = data.address;
+      var geocoder = new google.maps.Geocoder();
+
+      geocoder.geocode( {address: addressString} , function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var marker = new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location
+          });
+        }
+      });
+    };
+
+  });
 
 });

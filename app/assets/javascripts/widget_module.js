@@ -1,4 +1,4 @@
-var widgetModule = angular.module('widgetModule', ['templates']);
+var widgetModule = angular.module('widgetModule', ['templates', 'mapModule']);
 
 
 widgetModule.directive('showWidget', function() {
@@ -8,14 +8,19 @@ widgetModule.directive('showWidget', function() {
   }
 });
 
-widgetModule.directive('employeeLocationWidget', ['$timeout', function($timeout) {
+widgetModule.directive('employeeLocationsWidget', [ '$timeout', '$http', 'initializeMap' , function($timeout, $http, initializeMap) {
   return {
     restrict: 'E',
-    template: "<div class='map-canvas'></div>",
-    controller: function() {
+    template: "<div class='map-canvas' id='employee-locations-map'></div>",
+    controller: function($scope) {
 
       $timeout(function() {
         $scope.map = initializeMap;
+
+        $timeout(function(){
+          console.log($scope.map);
+        });
+
       });
 
       var url = 'widgets/' + $scope.widget.id + '.json';
@@ -32,7 +37,7 @@ widgetModule.directive('employeeLocationWidget', ['$timeout', function($timeout)
         error(function(data, status, headers, config) {
           console.log(status);
         });
-    }
+    },
   }
 }]);
 
