@@ -1,7 +1,13 @@
 source 'https://rubygems.org'
 
+
+gem 'angularjs-rails', '~> 1.4.3'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-bootstrap'
+end
+
 gem 'sass', '3.2.19'
-gem 'bower-rails'
 gem 'angular-rails-templates'
 gem "foreman"
 gem 'sprockets', '2.12.3'

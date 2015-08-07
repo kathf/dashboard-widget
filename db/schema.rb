@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20150805131139) do
   create_table "widgets", force: :cascade do |t|
     t.string   "name"
     t.string   "engine"
+    t.text     "description"
     t.string   "response_wrapper"
     t.string   "metadata_entity",  default: [],              array: true
     t.datetime "created_at",                    null: false

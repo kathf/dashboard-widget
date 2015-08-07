@@ -1,40 +1,12 @@
 <div class="container-fluid">
-  <div class="gridster" ng-controller="DashboardController">
 
-    <div ng-repeat="widget in allWidgets" ng-init="widget.display = false">
-
-      <div ng-show="!widget.display">
-        <div class="panel panel-default" data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-          <div class="panel-heading drag-handle">
-            <h4 class="text-center"> {{ widget.name }} </h4>
-          </div>
-          <div class="panel-body">
-            <a class="text-center center-block" href ng-click="widget.display = true"><span class="glyphicon glyphicon-plus"></span>
-            <div>add widget</div></a>
-          </div>
-        </div>
-      </div>
-
-      <div ng-show="widget.display">
-        <div class="panel panel-default" data-row="1" data-col="1" data-sizex="1" data-sizey="2">
-          <div class="panel-heading drag-handle">
-            <div class="dropdown  pull-right">
-              <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu" role="menu">
-                <li class="dropdown-li"><a href ng-click="widget.display = false"</a>Close</li>
-                <li class="dropdown-li"><a href="#">Settings</a></li>
-              </ul>
-            </div>
-            <h4> {{ widget.name }} </h4>
-          </div>
-          <div class="panel-body">
-            <div ng-include="getInclude(widget)"></div>
-          </div>
-        </div>
-      </div>
-
+  <div ng-controller="DashboardController">
+    <div class="panel panel-default">
+      <a href class="text-center center-block" ng-click="something something">
+        <span class="glyphicon glyphicon-plus"></span>
+        <div>add widget</div>
+      </a>
     </div>
   </div>
+
 </div>
