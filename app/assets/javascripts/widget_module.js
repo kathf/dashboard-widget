@@ -8,7 +8,7 @@ widgetModule.directive('showWidget', function() {
   }
 });
 
-widgetModule.directive('employeeLocationsWidget', [ '$timeout', '$http', 'initializeMap' , function($timeout, $http, initializeMap) {
+var employeeLocationsWidget = function($timeout, $http, initializeMap) {
   return {
     restrict: 'E',
     template: "<div class='map-canvas' id='employee-locations-map'></div>",
@@ -39,7 +39,11 @@ widgetModule.directive('employeeLocationsWidget', [ '$timeout', '$http', 'initia
         });
     },
   }
-}]);
+};
+
+employeeLocationsWidget.$inject = [ '$timeout', '$http', 'initializeMap'];
+widgetModule.controller('employeeLocationsWidget', employeeLocationsWidget);
+
 
 // widgetModule.directive('salesFlowWidget', function() {
 //
