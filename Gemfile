@@ -9,13 +9,11 @@ end
 gem 'font-awesome-rails', '~> 4.3.0.0'
 gem 'sass', '3.2.19'
 gem 'angular-rails-templates'
-gem "foreman"
+# gem "foreman"
 gem 'sprockets', '2.12.3'
 
 group :production, :staging do
   gem "rails_12factor"
-  gem "rails_stdout_logging"
-  gem "rails_serve_static_assets"
 end
 
 gem 'devise'
