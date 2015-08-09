@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150805131139) do
     t.string   "engine"
     t.text     "description"
     t.string   "response_wrapper"
+    t.string   "icon"
     t.string   "metadata_entity",  default: [],              array: true
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false

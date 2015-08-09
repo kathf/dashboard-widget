@@ -3,7 +3,7 @@
   <div ng-repeat="widget in widgetsOnMarket"  class="panel" ng-show="!widget.display">
     <div class="widget-display-container">
       <a href ng-click="onWidgetSelect(widget)">
-        <span class="widget-image col-xs-2"><i class="fa fa-globe"></i></span>
+        <span class="widget-image col-xs-2"><i class="fa fa-<%= widget.icon %>"></i></span>
         <span class="widget-text col-xs-10">
           <h4> {{ widget.name }} </h4>
           <h5> {{ widget.description }} </h5>
