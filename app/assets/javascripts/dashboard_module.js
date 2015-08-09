@@ -1,7 +1,6 @@
 var dashboardModule = angular.module('dashboardModule', ['templates']);
 
-
-var dashboardController = function($scope, $http) {
+dashboardModule.controller('dashboardController', ['$scope', '$http', function($scope, $http) {
 
   $scope.widgetMarketplace = 'hide';
   $scope.widgetsDisplayed = [];
@@ -18,10 +17,15 @@ var dashboardController = function($scope, $http) {
     .error(function(data, status, headers, config) {
       console.log(status);
     });
-};
 
-dashboardController.$inject = ['$scope', '$http'];
-dashboardModule.controller('dashboardController', dashboardController);
+    $scope.closeWidget = function(widget) {
+      console.log("close function");
+      widget.display = false;
+      $scope.widgetsOnMarket.push(widget);
+      var index = $scope.widgetsOnMarket.indexOf(widget);
+      $scope.widgetsDisplayed.splice(index,1);
+    };
+}]);
 
 dashboardModule.directive('addWidgetButton', function() {
   return {
@@ -37,8 +41,10 @@ dashboardModule.directive('widgetMarketplace', function() {
     controller: function($scope){
 
       $scope.onWidgetSelect = function(widget) {
-        $scope.widgetsDisplayed.push(widget);
         $scope.widgetMarketplace = 'hide';
+
+        // add to widgetsDisplayed array and remove from widgetsOnMarket array
+        $scope.widgetsDisplayed.push(widget);
         var index = $scope.widgetsOnMarket.indexOf(widget);
         $scope.widgetsOnMarket.splice(index,1);
       }
