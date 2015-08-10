@@ -1,8 +1,8 @@
 var mapModule = angular.module('mapModule', []);
 
-mapModule.service('initializeMap', function($timeout){
+mapModule.factory('mapOptions', function() {
 
-  var myStyles = [
+  var mapStyles = [
     {"featureType":"road","stylers":[{"visibility":"off"}]},
     {"featureType":"transit","stylers":[{"visibility":"off"}]},
     {"featureType": "administrative", "elementType":"labels",  "stylers": [{"visibility": "off"}]},
@@ -23,33 +23,14 @@ mapModule.service('initializeMap', function($timeout){
     mapTypeControl: false,
     streetViewControl: false,
     panControl: false,
-    zoomControl: true,
+    zoomControl: false,
     scaleControl: false,
-    styles: myStyles
+    styles: mapStyles
   };
+  return mapOptions;
+});
 
-  $timeout(function(){
-
-    console.log("mooo");
-
-    this.map = new google.maps.Map(document.getElementById('employee-locations-map'), mapOptions);
-
-    console.log("moo");
-
-    this.geocode = function( data, map ) {
-      var addressString = data.address;
-      var geocoder = new google.maps.Geocoder();
-
-      geocoder.geocode( {address: addressString} , function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          var marker = new google.maps.Marker({
-              map: map,
-              position: results[0].geometry.location
-          });
-        }
-      });
-    };
-
-  });
-
+mapModule.factory('geocoder', function() {
+  var geocoder = new google.maps.Geocoder();
+  return geocoder;
 });
