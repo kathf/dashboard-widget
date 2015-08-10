@@ -6,6 +6,7 @@ class CreateWidgets < ActiveRecord::Migration
       t.text :description
       t.string :response_wrapper
       t.string :icon
+      t.string :ng_directive_tag
       t.string :metadata_entity, array: true, default: []
       t.timestamps null: false
     end
