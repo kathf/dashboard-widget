@@ -7,11 +7,9 @@
     <h4> {{ widget.name }} </h4>
   </div>
 
-
-    <!-- <employee-locations-widget class="panel"></employee-locations-widget> -->
-    <!-- <other-demo-widget class="panel"></other-demo-widget> -->
-
-    <sales-flow-widget class="panel-body"></sales-flow-widget>
-
+  <employee-locations-widget class="panel-body" ng-show="widget.ng_directive_tag == 'employee-locations-widget'"> </employee-locations-widget>
+  <other-demo-widget class="panel-body" ng-show="widget.ng_directive_tag == 'other-demo-widget'">>
+  </other-demo-widget>
+  <sales-flow-widget class="panel-body" ng-show="widget.ng_directive_tag == 'sales-flow-widget'">> </sales-flow-widget>
 
 </div>

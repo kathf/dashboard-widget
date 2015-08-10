@@ -1,6 +1,6 @@
 var mapModule = angular.module('mapModule', []);
 
-mapModule.factory('mapOptions', function() {
+mapModule.service('mapOptions', function() {
 
   var mapStyles = [
     {"featureType":"road","stylers":[{"visibility":"off"}]},
@@ -30,16 +30,12 @@ mapModule.factory('mapOptions', function() {
   return mapOptions;
 });
 
-mapModule.service('geocoder', function() {
-  return geocoder = new google.maps.Geocoder();
-});
 
 
-mapModule.service('addressForGeocoding', function() {
+mapModule.service('addressService', function() {
 
   this.getAddress = function(entity) {
-    var addressString;
-    if ( angular.isString(entity) ) {
+    if ( angular.isString(entity.address) ) {
       addressString = entity.address;
     } else {
       addressString = addressEnumerableToString(entity.address);
@@ -56,94 +52,99 @@ mapModule.service('addressForGeocoding', function() {
     });
     return addressString;
   };
+
 });
 
 
+mapModule.service('geocodeService', ['addressService', function(addressService) {
 
-//
-//   this.geocodeHashAddress = function(data) {
-//     console.log(data);
-//     var addressHash = data.address;
-//     var addressString = "";
-//
-//     angular.forEach(addressHash, function(value, key) {
-//       if ( value != "-" ) {
-//         addressString = addressString + value;
-//       }
-//     });
-//
-//     return addressString;
-//   });
-//
-//   this.geocodeHashString = function(data) {
-//
-//     return addressString;
-//   });
-//
-//
-//   geocoder.geocode( {address: addressString} , function(results, status) {
-//     console.log(status);
-//     if (status == google.maps.GeocoderStatus.OK) {
-//       var latlng = results[0].geometry.location;
-//       var marker = new google.maps.Marker({
-//           map: map,
-//           position: latlng
-//       });
-//       heatmapData.push(latlng);
-//     }
-//     if ( status == google.maps.GeocoderStatus.ZERORESULTS ) {
-//       console.log("zero results");
-//     }
-//   });
-//   return
-// };
+  var addressMissing = [];
+  var addToMap = [];
+  var addressError = [];
+  var addressMultipleMatches = [];
 
+  this.addressMissing = function(){
+    return addressMissing;
+  }
 
+  this.addToMap = function(){
+    return addToMap;
+  }
 
+  this.addressError = function() {
+    return addressError;
+  };
+  this.addressMultipleMatches = function() {
+    return addressError;
+  };
 
+  var geocoder = new google.maps.Geocoder();
 
+  this.geocodeAddresses = function(entity) {
+    var addressString = addressService.getAddress(entity);
+    if (addressString == "") {
+      addressMissing.push(entity);
+    } else {
+      geocoder.geocode( {address: addressString} , function(results, status) {
+        if (status == "OK") {
+          var object = results[0];
+          addToMap.push(object);
+        }
+        if ( status == "OVER_QUERY_LIMIT" ) {
+          addressMultipleMatches.push(entity);
+        } if ( status == "ZERO_RESULTS") {
+          addressError.push(entity);
+        };
+      });
+    }
+  };
+}]);
 
+mapModule.service('mapLayers', function() {
+  var infowindow = new google.maps.InfoWindow();
 
-// var heatmap = new google.maps.visualization.HeatmapLayer({
-//   data: heatmapData,
-//   map: map,
-// });
+  this.createMarkers = function(object, map) {
+    var latlng = object.geometry.location;
+    var location = object.formatted_address;
+    var marker = new google.maps.Marker({
+        map: map,
+        position: latlng,
+        location: location,
+    });
+    google.maps.event.addListener(marker, 'mouseover', function() {
+      var contentString = marker.location;
+      infowindow.setContent( contentString );
+      infowindow.open(map, marker);
+    });
 
+  };
+  this.createHeatmap = function(map, heatmapData) {
+    var heatmap = new google.maps.visualization.HeatmapLayer({
+      data: heatmapData,
+      map: map,
+      opacity: 1,
+      radius: 20,
+    });
+  };
+  this.createInfoWindow = function(map) {
+    google.maps.event.addListener(map, 'mouseover', function() {
+      infowindow.close();
+    });
+    return infowindow;
+  };
+});
 
-//
-//
-//
-//
-//
-// widgetModule.service('geocodeFunction', ['geocoder', function(geocoder) {
-//     var addressHash = this.address;
-//     var addressString = "";
-//     var heatmapData = [];
-//
-//     angular.forEach(addressHash, function(value, key) {
-//       if ( value != "-" ) {
-//         addressString = addressString + value;
-//       }
-//     });
-//
-//     this.geocoder = function
-//       geocode( {address: addressString} , function(results, status) {
-//       console.log(status);
-//       if (status == google.maps.GeocoderStatus.OK) {
-//         var latlng = results[0].geometry.location;
-//         var marker = new google.maps.Marker({
-//             map: map,
-//             position: latlng
-//         });
-//         heatmapData.push(latlng);
-//       }
-//       if ( status == google.maps.GeocoderStatus.ZERORESULTS ) {
-//         console.log("zero results");
-//       }
-//     });
-//
-//     var heatmap = new google.maps.visualization.HeatmapLayer({
-//       data: heatmapData,
-//       map: map,
-//     });
-// }]);
+mapModule.service('dataService', ['$http', '$q', function($http, $q) {
+  this.getData = function(url) {
+    var request = $http.get(url);
+    return( request.then( handleSuccess, handleError ) );
+  };
+
+  function handleSuccess( response ) {
+    return( response.data );
+  };
+
+  function handleError( response ) {
+    return( $q.reject( response.data.message ) );
+  };
+}]);

@@ -9,48 +9,40 @@ widgetModule.directive('showWidget', function() {
 });
 
 
-widgetModule.directive('employeeLocationsWidget', [ '$http', 'mapOptions', 'geocoder', function($http, mapOptions, geocoder) {
+widgetModule.directive('employeeLocationsWidget', [
+  '$http',
+  'mapOptions',
+  'geocodeService',
+  '$timeout',
+  'dataService',
+  'mapLayers',
+  function($http, mapOptions, geocodeService, $timeout, dataService, mapLayers ) {
+
   return {
     restrict: 'E',
     template: "<div class='map-canvas' id='employee-locations-map'></div>",
+    scope: true,
     controller: function($scope) {
 
-      var map = new google.maps.Map(document.getElementById('employee-locations-map'), mapOptions);
-
-      var url = 'widgets/' + $scope.widget.id + '.json';
-
-      $http.get(url).
-        success(function(data, status, headers, config) {
-          $.each( data, function() {
-            geocodeFunction(this);
-          });
-
-        }).
-        error(function(data, status, headers, config) {
-          console.log(status);
-        });
-
+      var EmpLocationMap = new google.maps.Map(document.getElementById('employee-locations-map'), mapOptions);
       var heatmapData = [];
 
-      function geocodeFunction(data) {
-        var addressString = data.address;
+      var url = 'widgets/' + $scope.widget.id + '.json';
+      var response = dataService.getData(url);
 
-        geocoder.geocode( {address: addressString} , function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            var latlng = results[0].geometry.location;
-            var marker = new google.maps.Marker({
-                map: map,
-                position: latlng
-            });
-            heatmapData.push(latlng);
-          };
+      response.then(function(data){
+        angular.forEach( data, function(entity) {
+          geocodeService.geocodeAddresses(entity);
         });
-      };
-
-      var heatmap = new google.maps.visualization.HeatmapLayer({
-        data: heatmapData,
-        map: map,
       });
+
+      $timeout(function(){
+        angular.forEach(geocodeService.addToMap(), function(object) {
+          heatmapData.push(object.geometry.location);
+          mapLayers.createMarkers(object, EmpLocationMap);
+          mapLayers.createHeatmap(EmpLocationMap, heatmapData);
+        })
+      },2000);
     },
   }
 }]);
@@ -59,67 +51,41 @@ widgetModule.directive('employeeLocationsWidget', [ '$http', 'mapOptions', 'geoc
 widgetModule.directive('salesFlowWidget', [
   '$http',
   'mapOptions',
-  'geocoder',
-  'addressForGeocoding',
+  'geocodeService',
   '$timeout',
-  function($http, mapOptions, geocoder, addressForGeocoding, $timeout ) {
+  'dataService',
+  'mapLayers',
+  function($http, mapOptions, geocodeService, $timeout, dataService, mapLayers ) {
 
   return {
     restrict: 'E',
     template: "<div class='map-canvas' id='sales-flow-widget'></div>",
-
+    scope: true,
     controller: function($scope) {
-      var map = new google.maps.Map(document.getElementById('sales-flow-widget'), mapOptions);
-      var url = 'widgets/' + $scope.widget.id + '.json';
+
+      var salesFlowMap = new google.maps.Map(document.getElementById('sales-flow-widget'), mapOptions);
       var heatmapData = [];
-      var addressMissing = [];
-      var addressError = [];
-      var addressMultipleMatches = [];
 
-      $http.get(url).
-        success(function(data, status, headers, config) {
-          angular.forEach( data, function(entity) {
-            var addressString = addressForGeocoding.getAddress(entity);
-            if (addressString == "") {
-              addressMissing.push(entity);
-            } else {
-              geocoder.geocode( {address: addressString} , function(results, status) {
-                if (status == "OK") {
-                  var latlng = results[0].geometry.location;
-                  addEntityToMap(latlng);
-                } if ( status == "OVER_QUERY_LIMIT" ) {
-                  addressMultipleMatches.push(entity);
-                } if ( status == "ZERO_RESULTS") {
-                  addressError.push(entity);
-                };
-              });
-            }
-          });
+      url = 'widgets/' + $scope.widget.id + '.json';
+      var response = dataService.getData(url);
 
-          $timeout(function() {
-            var heatmap = new google.maps.visualization.HeatmapLayer({
-              data: heatmapData,
-              map: map,
-            });
-            console.log("heatmap");
-          }, 1000);
-
-        }).
-        error(function(data, status, headers, config) {
-          console.log(status);
+      response.then(function(data){
+        angular.forEach( data, function(entity) {
+          geocodeService.geocodeAddresses(entity);
         });
+      });
 
-      function addEntityToMap(latlng) {
-        var marker = new google.maps.Marker({
-            map: map,
-            position: latlng
-        });
-        console.log("adding to heatmap");
-        heatmapData.push(latlng);
-      };
-    },
+      $timeout(function(){
+        angular.forEach(geocodeService.addToMap(), function(object) {
+          heatmapData.push(object.geometry.location);
+          mapLayers.createMarkers(object, salesFlowMap);
+          mapLayers.createHeatmap(salesFlowMap, heatmapData);
+        })
+      },2000);
+    }
   }
 }]);
+
 
 widgetModule.directive('otherDemoWidget', function(){
   return {
