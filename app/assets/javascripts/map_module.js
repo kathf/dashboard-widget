@@ -30,7 +30,120 @@ mapModule.factory('mapOptions', function() {
   return mapOptions;
 });
 
-mapModule.factory('geocoder', function() {
-  var geocoder = new google.maps.Geocoder();
-  return geocoder;
+mapModule.service('geocoder', function() {
+  return geocoder = new google.maps.Geocoder();
 });
+
+
+mapModule.service('addressForGeocoding', function() {
+
+  this.getAddress = function(entity) {
+    var addressString;
+    if ( angular.isString(entity) ) {
+      addressString = entity.address;
+    } else {
+      addressString = addressEnumerableToString(entity.address);
+    }
+    return addressString;
+  };
+
+  function addressEnumerableToString(addressEnumerable) {
+    var addressString = "";
+    angular.forEach(addressEnumerable, function(value, key) {
+      if ( value != "-" ) {
+        addressString += value + " ";
+      }
+    });
+    return addressString;
+  };
+});
+
+
+
+//
+//   this.geocodeHashAddress = function(data) {
+//     console.log(data);
+//     var addressHash = data.address;
+//     var addressString = "";
+//
+//     angular.forEach(addressHash, function(value, key) {
+//       if ( value != "-" ) {
+//         addressString = addressString + value;
+//       }
+//     });
+//
+//     return addressString;
+//   });
+//
+//   this.geocodeHashString = function(data) {
+//
+//     return addressString;
+//   });
+//
+//
+//   geocoder.geocode( {address: addressString} , function(results, status) {
+//     console.log(status);
+//     if (status == google.maps.GeocoderStatus.OK) {
+//       var latlng = results[0].geometry.location;
+//       var marker = new google.maps.Marker({
+//           map: map,
+//           position: latlng
+//       });
+//       heatmapData.push(latlng);
+//     }
+//     if ( status == google.maps.GeocoderStatus.ZERORESULTS ) {
+//       console.log("zero results");
+//     }
+//   });
+//   return
+// };
+
+
+
+
+
+
+
+// var heatmap = new google.maps.visualization.HeatmapLayer({
+//   data: heatmapData,
+//   map: map,
+// });
+
+
+//
+//
+//
+//
+//
+// widgetModule.service('geocodeFunction', ['geocoder', function(geocoder) {
+//     var addressHash = this.address;
+//     var addressString = "";
+//     var heatmapData = [];
+//
+//     angular.forEach(addressHash, function(value, key) {
+//       if ( value != "-" ) {
+//         addressString = addressString + value;
+//       }
+//     });
+//
+//     this.geocoder = function
+//       geocode( {address: addressString} , function(results, status) {
+//       console.log(status);
+//       if (status == google.maps.GeocoderStatus.OK) {
+//         var latlng = results[0].geometry.location;
+//         var marker = new google.maps.Marker({
+//             map: map,
+//             position: latlng
+//         });
+//         heatmapData.push(latlng);
+//       }
+//       if ( status == google.maps.GeocoderStatus.ZERORESULTS ) {
+//         console.log("zero results");
+//       }
+//     });
+//
+//     var heatmap = new google.maps.visualization.HeatmapLayer({
+//       data: heatmapData,
+//       map: map,
+//     });
+// }]);
