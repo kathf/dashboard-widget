@@ -72,7 +72,7 @@ widgetModule.directive('salesFlowWidget', ['$http', 'mapOptions', 'geocodeServic
         $scope.addressMissing = geocodeService.addressMissing;
         $scope.addressError = geocodeService.addressError;
         $scope.addressMultipleMatches = geocodeService.addressMultipleMatches;
-      },2000);
+      },3000);
     },
     controllerAs: 'salesFlowCtrl',
   }
