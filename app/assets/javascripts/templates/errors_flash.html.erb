@@ -1,6 +1,14 @@
 <div class="errors-flash-container col-sm-6 col-lg-4">
-  <div ng-repeat="error in errors">
-
-
+  <div class="panel">
+    <p> Addresses missing for {{addressMissing.length}} entities:</p>
+    <span ng-repeat="error in addressMissing"></span>
+  </div>
+  <div class="panel">
+    <p> Address errors for {{addressError.length}} entities:</p>
+    <span ng-repeat="error in addressError"></span>
+  </div>
+  <div class="panel">
+    <p> Multiple location results for {{addressMultipleMatches.length}} entities:</p>
+    <span ng-repeat="error in addressMultipleMatches"></span>
   </div>
 </div>

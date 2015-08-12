@@ -1,11 +1,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require angular
-//= require angular-resource
-//= require angular-route
 //= require angular-rails-templates
 //= require bootstrap
-//= require_tree ./templates
+// = require_tree ./templates
 //= require_tree .
 
 
@@ -17,5 +15,6 @@
     'dashboardModule',
     'widgetModule',
     'mapModule',
+    'dataModule',
   ])
 })();

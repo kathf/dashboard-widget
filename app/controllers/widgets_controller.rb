@@ -5,7 +5,9 @@ class WidgetsController < ApplicationController
 
   def index
     @widgets = Widget.all
-    render json: @widgets
+    respond_to do |format|
+      format.json {render json: @widgets}
+    end
   end
 
   def show
